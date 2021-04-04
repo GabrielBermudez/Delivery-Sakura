@@ -7,12 +7,14 @@ let mongoose = require('mongoose')
 let cookieSession = require('cookie-session')
 let fileUpload = require('express-fileupload')
 					 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+let indexRouter = require('./routes/index')
+let loginRouter = require('./routes/login')
+let registerRouter = require('./routes/register')
 
 var app = express();
 
-let mongoDB = 'mongodb://localhost/red_bicicletas';
+//let mongoDB = 'mongodb://localhost/sakura';
+let mongoDB = "mongodb+srv://gabrielbermudez:39237216@sakura.ticmh.mongodb.net/Sakura-Delivery?retryWrites=true&w=majority";
 mongoose.connect(mongoDB,{useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.Promise = global.Promise;
 let db = mongoose.connection;
@@ -44,8 +46,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', indexRouter)
+app.use('/login', loginRouter)
+app.use('/register', registerRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

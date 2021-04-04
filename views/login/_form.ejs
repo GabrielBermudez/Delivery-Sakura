@@ -1,0 +1,20 @@
+<div id="titulo" class="d-flex justify-content-center mt-3 mb-3"><h4>Ingresar</h4></div>
+<div class="mb-3">
+	<label for="label-correo" class="form-label">Email:</label>
+	<input type="text" class="form-control" id="correo" name="correo" placeholder="example@gmail.com">
+</div>
+<div class="mb-3">
+	<label for="label-password" class="form-label">Contraseña:</label>
+	<input type="password" class="form-control" id="password" name="password" placeholder="********">
+</div>
+<%	if(typeof error !== "undefined") { %> 
+	<span id="error" style="color: red;"><sup>* </sup><%= error %></span>
+<% } %>
+<div class="d-flex justify-content-center mb-3 mt-3">
+    <button type="button" class="btn btn-warning m-1" onclick="window.history.go(-1)"><i class="fa fa-reply"></i>
+        Volver</button>
+    <button type="submit" class="btn btn-primary m-1">Enviar</button>
+</div>
+<div class="d-flex justify-content-center mb-3 mt-3">
+    <a href="/login/reset-password/" class="link-reset-password">¿Has olvidado tu contraseña?</a>
+</div>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%- include('../layouts/head'); %>
+</head>
+<body id="register-index-body">
+	<header>
+		<%- include('../layouts/header'); %>
+	</header>
+
+	<div class="container d-flex justify-content-center mt-2 mb-2" id="register-index-form" >
+		<form method="POST" action="/register/create" id="form">
+			<%- include('_form'); %>
+		</form>
+	</div>
+
+	<footer>
+		<%- include('../layouts/footer'); %>
+	</footer>
+	<script type="text/javascript" src="/javascripts/register-validation.js"></script>
+</body>
+</html>
