@@ -152,4 +152,8 @@ footer .contenedor .row{
 .link-reset-password{
 	text-decoration-line: none;
 }
+
+#titulo-login{
+	border-bottom: 1px solid black;
+}
 /*END INDEX*/
