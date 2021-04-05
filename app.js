@@ -6,10 +6,13 @@ var logger = require('morgan');
 let mongoose = require('mongoose')
 let cookieSession = require('cookie-session')
 let fileUpload = require('express-fileupload')
+let passport = require('passport')
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 					 
 let indexRouter = require('./routes/index')
 let loginRouter = require('./routes/login')
 let registerRouter = require('./routes/register')
+let signInRouter = require('./routes/signIn')
 
 var app = express();
 
@@ -36,6 +39,37 @@ app.use(fileUpload({
     tempFileDir : '/tmp/'
 }));
 
+/* Passport */
+
+let userProfile
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
+/*  Google AUTH  */
+ 
+const GOOGLE_CLIENT_ID = '326321581873-f3q5m8jei1a110a865948ohlsvghotkd.apps.googleusercontent.com';
+const GOOGLE_CLIENT_SECRET = 'jGS5tD3JWY3ad01yeJiLKyM3';
+passport.use(new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/sign-in/auth/google/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+      userProfile=profile;
+      console.log(userProfile)
+      return done(null, userProfile);
+  }
+));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -49,6 +83,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter)
 app.use('/login', loginRouter)
 app.use('/register', registerRouter)
+app.use('/sign-in', signInRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
