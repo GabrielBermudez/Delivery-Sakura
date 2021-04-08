@@ -157,3 +157,28 @@ footer .contenedor .row{
 	border-bottom: 1px solid black;
 }
 /*END INDEX*/
+
+/*********************PROFILE***************************/
+/*START USER*/
+#profile-body{
+	background-color: #edf0f5;
+}
+
+#profile{
+	border: 1px solid black; 
+	border-radius: 1px; 
+	background-color: white;
+	width: 50%;
+	margin: 0 auto;
+	
+}
+
+#title-profile h1{
+	border-bottom: 1px solid black;
+}
+
+.image-profile img{
+	width: 85%;
+	border-radius: 300px;
+}
+/*END USER*/

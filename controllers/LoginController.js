@@ -2,6 +2,7 @@ const User = require('../models/UserModel')
 const mongoose = require('mongoose')
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 exports.action_login_index = (req, res, next ) => {
 	res.render('login/index')
@@ -13,19 +14,22 @@ exports.action_login_reset_password = (req,res) => {
 
 exports.user_login = function (req, res) {
 
-    User.FindUserByCorreo(req.body.correo,req.body.password,function(err,usuario) {
+    User.FindUserByEmail(req.body.correo,function(err,usuario) {
         if (err) {
             return next(err);
         }
-        if(usuario && (req.body.correo == usuario.correo && req.body.password == usuario.password)){
-            req.session.user = usuario  
-            console.log(req.session.user)
-            res.redirect('/'); 
-        }else{
-            res.render('login/index',{ error: 'Correo y/o contraseña invalida' });
+        if(usuario){
+            bcrypt.compare(`${req.body.password}-${usuario.fecha_creacion.getTime()}`, usuario.password, function(err, result) {
+                if(result){
+                    req.session.user = usuario 
+                    res.redirect('/')
+                }else{
+                    res.render('login/index',{ error: 'Correo y/o contraseña invalida' });
+                }
+            }) 
         }
-    });
-};
+    })
+}
 
 exports.user_logout = (req,res,next) => {
     req.session.user = null;
@@ -95,6 +99,7 @@ exports.action_change_password = (req, res, next) => {
 
 exports.change_password = (req, res, next) => {
     let {id,token,password} = req.body
+    const saltRounds = 10
 
     User.FindUserByID(req.body.id, (err, user) => {
         if(err)
@@ -107,11 +112,16 @@ exports.change_password = (req, res, next) => {
                 console.log('This token is not available')
                 res.redirect('/')
             } else {
-                user.password = password
-                User.UpdateUser(user)
-                console.log('The password has changed sucessfully')
-                res.redirect('/')
+                bcrypt.hash(`${password}-${user.fecha_creacion.getTime()}`, saltRounds, function(err, hash) {
+                    if (err) {
+                        return next(err)
+                    }
+                    user.password = hash
+                    User.UpdateUser(user)
+                    console.log('The password has changed sucessfully')
+                    res.redirect('/')
+                })
             }  
-        });  
+        })  
     })
 }

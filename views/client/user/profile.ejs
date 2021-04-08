@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%- include('../../layouts/head'); %>
+</head>
+<body id="profile-body">
+	<header>
+		<%- include('../../layouts/header'); %>
+	</header>
+	<div class="d-flex justify-content-center mt-2 mb-2" id="profile">
+		<div class="container mt-2 mb-2" >
+			<div class="d-flex justify-content-center mt-2 mb-4" id="title-profile">
+				<h1>Datos Personales</h1>
+			</div>
+			<div class="row">
+				<div class="col-md-4 image-profile d-flex justify-content-center">
+					<img src="<%=session.user.url_imagen%>" alt="">
+				</div>
+				<div class="col-md-8">
+					<div class="row nombre">
+						<div class="col-md-2">Nombre:</div>
+						<div class="col-md-3"><%=session.user.nombre%></div>
+					</div>
+					<div class="row apellido">
+						<div class="col-md-2">Apellido:</div>
+						<div class="col-md-3"><%=session.user.apellido%></div>
+					</div>
+					<div class="row edad">
+						<div class="col-md-2">Edad:</div>
+						<div class="col-md-3"><%=session.user.edad%></div>
+					</div>
+					<div class="row dni">
+						<div class="col-md-2">DNI:</div>
+						<div class="col-md-3"><%=session.user.dni%></div>
+					</div>
+					<div class="row correo">
+						<div class="col-md-2">Correo:</div>
+						<div class="col-md-3"><%=session.user.correo%></div>
+					</div>
+					<div class="row direccion">
+						<div class="col-md-2">Dirección:</div>
+						<div class="col-md-3"><%=session.user.direccion%></div>
+					</div>
+					<div class="row telefono">
+						<div class="col-md-2">Teléfono:</div>
+						<div class="col-md-3"><%=session.user.telefono%></div>
+					</div>
+					<div class="row celular">
+						<div class="col-md-2">Celular</div>
+						<div class="col-md-3"><%=session.user.celular%></div>
+					</div>
+			
+				</div>
+			</div>
+			<div class="d-flex justify-content-center mb-3 mt-5">
+			    <button type="button" class="btn btn-warning m-1" onclick="window.history.go(-1)"><i class="fa fa-reply"></i>
+			        Volver</button>
+			    <button type="submit" class="btn btn-primary m-1">Modificar Datos</button>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<%- include('../../layouts/footer'); %>
+	</footer>
+	
+</body>
+</html>
