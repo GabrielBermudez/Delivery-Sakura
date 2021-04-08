@@ -18,7 +18,8 @@ let userRouter = require('./routes/client/user')
 var app = express();
 
 //let mongoDB = 'mongodb://localhost/sakura';
-let mongoDB = "mongodb+srv://gabrielbermudez:39237216@sakura.ticmh.mongodb.net/Sakura-Delivery?retryWrites=true&w=majority";
+
+let mongoDB = process.env.MONGO_DB || 'mongodb://localhost/sakura'
 mongoose.connect(mongoDB,{useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.Promise = global.Promise;
 let db = mongoose.connection;
