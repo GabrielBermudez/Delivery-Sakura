@@ -13,6 +13,7 @@ let indexRouter = require('./routes/index')
 let loginRouter = require('./routes/login')
 let registerRouter = require('./routes/register')
 let signInRouter = require('./routes/signIn')
+let userRouter = require('./routes/client/user')
 
 var app = express();
 
@@ -46,12 +47,12 @@ let userProfile
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function(user, cb) {
-  cb(null, user);
+passport.serializeUser(function(user, done) {
+  done(null, user);
 });
 
-passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
 });
 
 /*  Google AUTH  */
@@ -65,7 +66,6 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
       userProfile=profile;
-      console.log(userProfile)
       return done(null, userProfile);
   }
 ));
@@ -84,6 +84,7 @@ app.use('/', indexRouter)
 app.use('/login', loginRouter)
 app.use('/register', registerRouter)
 app.use('/sign-in', signInRouter)
+app.use('/client/user',userRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
