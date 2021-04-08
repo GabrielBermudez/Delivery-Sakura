@@ -62,7 +62,7 @@ const GOOGLE_CLIENT_SECRET = 'jGS5tD3JWY3ad01yeJiLKyM3';
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/sign-in/auth/google/callback"
+    callbackURL: `http://${process.env.CALL_BACK_URL || 'localhost:3000'}/sign-in/auth/google/callback`
   },
   function(accessToken, refreshToken, profile, done) {
       userProfile=profile;

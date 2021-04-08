@@ -11,7 +11,7 @@ exports.verify_user = (req,res,next) => {
 	let date = new Date();
 	const saltRounds = 10;
 	req.session.user = req.session.passport.user
-	console.log(req.session.user)
+
 	User.FindUserByEmail(req.session.user.emails[0].value, (err,usuario) =>{
 		if(!usuario){
 			bcrypt.hash(`${req.session.user.id}-${date.getTime()}`, saltRounds, function(err, hash) {
